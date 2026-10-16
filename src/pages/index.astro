@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import Lines from '../components/Lines.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Slot from '../components/Slot.astro';
+import { SITE } from '../data/site';
+import { services, generalFaqs } from '../data/services';
+import { featured, getArea } from '../data/areas';
+import { faqPage } from '../data/schema';
+
+const faqs = generalFaqs.slice(0, 6);
+const trust = [
+  ['24/7', 'Emergency response'],
+  ['Since 2001', 'Serving the DC region'],
+  ['IICRC', 'Certified'],
+  ['Licensed', 'And fully insured'],
+  ['Family & veteran', 'Owned'],
+  ['English / Spanish', 'Spoken'],
+];
+const steps = [
+  ['Get in touch', 'Call any hour or send the short form. We start with what happened and how to keep everyone safe.'],
+  ['Schedule an inspection', 'We inspect with moisture meters and infrared cameras and document the damage.'],
+  ['Work with your insurance', 'We work directly with your insurance company and handle the claim paperwork alongside the job.'],
+  ['Restore your space', 'Drying, cleaning and repairs bring the space back, backed by 1-year labor and 5-year material warranties.'],
+];
+---
+<Layout
+  title="24/7 Water, Fire & Mold Restoration in MD, DC & NoVA | ServicePros"
+  description="Family and veteran owned water, fire and mold restoration since 2001. IICRC certified, licensed and insured. Call 301-383-9484, 24/7 across Maryland, DC and Northern Virginia."
+  schema={[faqPage(faqs)]}
+>
+  <section class="hero">
+    <Lines />
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Gaithersburg, MD &middot; Family &amp; veteran owned since 2001</p>
+        <h1>24/7 Water, Fire &amp; Mold Restoration in <em>Maryland, DC &amp; Northern Virginia</em></h1>
+        <p class="hero-lead">Flooded basement, fire damage or mold? We answer around the clock, restore the damage and work directly with your insurance company.</p>
+        <a class="bigcall" href={SITE.phoneHref} data-call="hero">
+          <Icon name="phone" />
+          <span><small>Call 24/7</small><strong>{SITE.phoneDisplay}</strong></span>
+        </a>
+        <p class="hero-note">Prefer to write? Use the short form. Habla espa&ntilde;ol.</p>
+        <ul class="hero-badges">
+          <li><Icon name="shield" /> IICRC certified</li>
+          <li><Icon name="shield" /> Licensed &amp; insured</li>
+          <li><Icon name="shield" /> Insurance claims assistance</li>
+        </ul>
+      </div>
+      <ContactForm id="hero" title="Get help now" sub="Four fields. We call you back." />
+    </div>
+  </section>
+
+  <section class="trust" aria-label="Why customers trust ServicePros">
+    <div class="wrap">
+      <ul>{trust.map(([a, b]) => <li><strong>{a}</strong><span>{b}</span></li>)}</ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head sec-head--split reveal">
+        <div><p class="eyebrow">What happened?</p><h2>Restoration and rebuilding, from one team</h2></div>
+        <p>Residential and commercial. Tell us what happened and we will handle the cleanup, the drying, the repairs and the insurance conversation.</p>
+      </div>
+      <div class="svc-grid">
+        {services.map((s, i) => (
+          <a class={`svc reveal ${i === 0 ? 'svc--feature' : ''}`} href={`/services/${s.slug}/`}>
+            <span class="ico"><Icon name={s.icon} /></span>
+            <h3>{s.name}</h3>
+            <p>{s.short}</p>
+            <span class="go">Learn more <Icon name="arrow" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--dark">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">How it works</p><h2>Four steps from call to restored</h2></div>
+      <ol class="steps reveal">
+        {steps.map(([t, d]) => <li><div><h3>{t}</h3><p>{d}</p></div></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--white">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">Insurance</p>
+        <h2>We work with your insurance company, so you do not have to chase it</h2>
+        <p>Water, fire and mold losses usually mean a claim. ServicePros works directly with major insurance providers and handles the paperwork alongside the restoration.</p>
+        <ul class="checks">
+          {['Document the damage with photos and moisture readings', 'Communicate directly with your insurer', 'Coordinate claim paperwork for covered losses', 'Tell us early: call before you start cleaning up'].map((t) => <li><Icon name="check" /><span>{t}</span></li>)}
+        </ul>
+        <a class="btn btn--call" href={SITE.phoneHref}><Icon name="phone" />Call {SITE.phoneDisplay}</a>
+      </div>
+      <div class="reveal">
+        <!-- TODO(client): swap for a real photo of technicians documenting damage with a moisture meter / infrared camera. -->
+        <Slot note="Technician documenting damage with a moisture meter" />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--dark">
+    <div class="wrap quote reveal">
+      <span class="mark" aria-hidden="true">&ldquo;</span>
+      <p class="eyebrow">Customer story</p>
+      <blockquote>A late-night plumbing leak threatened the lower levels of his Gaithersburg home. ServicePros responded in under an hour, began mitigation and handled communication with the insurance company.</blockquote>
+      <cite><strong>Matt, Gaithersburg, MD</strong>His wife called it one of the easiest and most reassuring service experiences their family has had.</cite>
+      <p class="note">Summary of a customer review. <a href="/reviews/" style="color:var(--accent)">Read more</a></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head sec-head--split reveal">
+        <div><p class="eyebrow">Service areas</p><h2>Based in Gaithersburg, serving the whole region</h2></div>
+        <p>Maryland, Northern Virginia and Washington, DC. Pick your area to see how we can help.</p>
+      </div>
+      <ul class="chips reveal">
+        {featured.map((s) => <li><a href={`/service-areas/${s}/`}>{getArea(s).label}</a></li>)}
+        <li><a href="/service-areas/" style="background:var(--navy-900);color:#fff">All areas</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec--white">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal"><p class="eyebrow">FAQ</p><h2>Questions we hear first</h2><p>Cannot find yours? Call {SITE.phoneDisplay} any hour.</p><a class="link-arrow" href="/faq/">All questions <span><Icon name="arrow" /></span></a></div>
+      <div class="reveal"><Faq items={faqs} /></div>
+    </div>
+  </section>
+
+  <FinalCta />
+</Layout>

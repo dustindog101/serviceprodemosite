@@ -1,0 +1,29 @@
+---
+import { SITE, NAV } from '../data/site';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+const path = Astro.url.pathname;
+---
+<div class="topbar">
+  <div class="wrap">
+    <span><span class="pulse" aria-hidden="true"></span>24/7 emergency<span class="tb-long"> service. Serving Maryland, DC &amp; Northern Virginia</span></span>
+    <a href={SITE.phoneHref}>{SITE.phone}</a>
+  </div>
+</div>
+<header class="header">
+  <div class="wrap">
+    <a href="/" class="logo" aria-label="ServicePros Cleaning & Restoration, home">
+      <Logo />
+      <span>ServicePros<small>Cleaning &amp; Restoration</small></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      {NAV.map((n) => <a href={n.href} aria-current={path.startsWith(n.href.split('/').slice(0,2).join('/') + '/') && n.href !== '/' ? 'page' : undefined}>{n.label}</a>)}
+    </nav>
+    <a class="btn btn--call" href={SITE.phoneHref} data-call="header"><Icon name="phone" /><span>Call <span class="call-num">{SITE.phone}</span></span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu"><Icon name="menu" /></button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    {NAV.map((n) => <a href={n.href}>{n.label}</a>)}
+    <a href="/contact/">Request service</a>
+  </nav>
+</header>

@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import Icon from '../../components/Icon.astro';
+import Faq from '../../components/Faq.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import Slot from '../../components/Slot.astro';
+import { SITE } from '../../data/site';
+import { services, getService } from '../../data/services';
+import { featured, getArea } from '../../data/areas';
+import { breadcrumbs, faqPage, serviceSchema } from '../../data/schema';
+
+export function getStaticPaths() { return services.map((s) => ({ params: { slug: s.slug }, props: { slug: s.slug } })); }
+const s = getService(Astro.props.slug);
+const path = `/services/${s.slug}/`;
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Services', href: '/services/water-damage/' }, { name: s.name, href: path }];
+const related = s.related.map(getService);
+const showCase = s.slug === 'water-damage';
+---
+<Layout title={s.title} description={s.description}
+  schema={[breadcrumbs([crumbs[0], { name: s.name, href: path }]), serviceSchema(s.name, s.description, path), faqPage(s.faqs)]}>
+  <PageHead crumbs={crumbs} h1={s.h1} lead={s.intro}>
+    <ul class="bullets">{s.bullets.map((b) => <li><Icon name="check" />{b}</li>)}</ul>
+    <div class="ph-actions">
+      <a class="btn btn--call" href={SITE.phoneHref} data-call="service-hero"><Icon name="phone" />Call {SITE.phoneDisplay}</a>
+      <a class="btn btn--ghost" href="/contact/">Request service</a>
+    </div>
+  </PageHead>
+
+  <section class="trust"><div class="wrap">
+    <ul>
+      {[['24/7', 'Emergency response'], ['IICRC', 'Certified'], ['Licensed', 'And fully insured'], ['Since 2001', 'Family & veteran owned'], ['1 + 5 year', 'Labor & material warranties'], ['English / Spanish', 'Spoken']].map(([a, b]) => <li><strong>{a}</strong><span>{b}</span></li>)}
+    </ul>
+  </div></section>
+
+  <section class="sec">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal"><p class="eyebrow">Services</p><h2>{s.subHeading}</h2><p>Residential and commercial properties across Maryland, DC and Northern Virginia.</p></div>
+      <div class="sublist reveal">{s.subs.map((x) => <div><h3>{x.title}</h3><p>{x.text}</p></div>)}</div>
+    </div>
+  </section>
+
+  <section class="sec sec--paper2">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">Right now</p><h2>{s.tipsHeading}</h2></div>
+      <div class="tips">
+        {s.tips.map((t, i) => <div class="tip reveal"><span class="n">0{i + 1}</span><h3>{t.title}</h3><p>{t.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--white">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">Why ServicePros</p>
+        <h2>A local, family-run team that answers the phone</h2>
+        <ul class="checks">{s.why.map((w) => <li><Icon name="check" /><span>{w}</span></li>)}</ul>
+        <p>Based in Gaithersburg, MD. <strong>{SITE.offer}</strong> when you mention the offer at scheduling. <a href="/special-offers/">See terms</a>.</p>
+      </div>
+      <div class="reveal"><!-- TODO(client): real photo of crew/equipment for this service. --><Slot note={`${s.name}: crew or equipment on a real job`} /></div>
+    </div>
+  </section>
+
+  <section class="sec sec--dark">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">Process</p><h2>What happens after you call</h2></div>
+      <ol class="steps reveal">{s.process.map((p) => <li><div><h3>{p.title}</h3><p>{p.text}</p></div></li>)}</ol>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">Insurance</p>
+        <h2>We work directly with your insurer</h2>
+        <p>We document the damage and coordinate claim paperwork on covered losses, so you can focus on your family and your property.</p>
+        <a class="link-arrow" href="/faq/">Insurance FAQ <span><Icon name="arrow" /></span></a>
+      </div>
+      <div class="reveal">
+        {/* TODO(client): before/after case study with real photos for the non-water services. */}
+        {showCase ? (
+          <div class="panel"><p class="eyebrow" style="color:var(--steel-300)">Customer story</p><p style="font:400 1.3rem/1.35 var(--font-head)">A late-night plumbing leak in Gaithersburg. ServicePros responded in under an hour, began mitigation and handled communication with the insurance company.</p><p style="margin:0;color:var(--steel-300)">Matt, Gaithersburg, MD</p></div>
+        ) : (
+          <Slot note="Before and after photos from a completed job" />
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--white">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal"><p class="eyebrow">FAQ</p><h2>{s.name}: your questions</h2></div>
+      <div class="reveal"><Faq items={s.faqs} /></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">Related services</p><h2>Often needed together</h2></div>
+      <div class="related">{related.map((r) => <a href={`/services/${r.slug}/`}><strong>{r.name}</strong><span>{r.short}</span></a>)}</div>
+      <p style="margin-top:2rem">Nearby: {featured.slice(0, 6).map((a, i) => <><a href={`/service-areas/${a}/`}>{getArea(a).label}</a>{i < 5 ? ', ' : '. '}</>)}<a href="/service-areas/">See all service areas</a>.</p>
+    </div>
+  </section>
+  <FinalCta />
+</Layout>

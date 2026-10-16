@@ -1,0 +1,10 @@
+---
+// Placeholder for real photography. Replace with an <img> (with width/height, alt text) once the client supplies photos.
+import Lines from './Lines.astro';
+const { note = 'Photo of the ServicePros crew on a job', style = '' } = Astro.props as { note?: string; style?: string };
+---
+<!-- TODO(client): REAL PHOTO SLOT. Suggested: {note}. Do not use stock photos. -->
+<div class="slot" role="img" aria-label="Photo placeholder" style={style}>
+  <Lines />
+  <span>Photo slot: {note}</span>
+</div>

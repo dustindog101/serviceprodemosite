@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../data/site';
+---
+<Layout title="Page not found | ServicePros Cleaning & Restoration" description="That page could not be found. Call ServicePros 24/7 at 301-383-9484." noindex>
+  <section class="nf"><div class="wrap">
+    <p class="big">404</p>
+    <h1 style="font-size:2rem">This page is not here</h1>
+    <p>The link may be old or mistyped. If you have an emergency, do not search, just call.</p>
+    <p style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap"><a class="btn btn--call" href={SITE.phoneHref}>Call {SITE.phoneDisplay}</a><a class="btn btn--ghost dark" href="/">Back to home</a></p>
+  </div></section>
+</Layout>

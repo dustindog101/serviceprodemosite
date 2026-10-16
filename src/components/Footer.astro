@@ -1,0 +1,51 @@
+---
+import { SITE } from '../data/site';
+import { services } from '../data/services';
+import { featured, getArea } from '../data/areas';
+import Icon from './Icon.astro';
+---
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <p style="color:#fff;font:600 1.3rem var(--font-head)">ServicePros Cleaning &amp; Restoration</p>
+        <p>Family and veteran owned since 2001. Water, fire and mold restoration and remodeling across Maryland, Washington DC and Northern Virginia.</p>
+        <p><a class="tel" href={SITE.phoneHref}>{SITE.phoneDisplay}</a><br />Open 24 hours, 7 days a week</p>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+        <p>{SITE.locality}, {SITE.region}<br /><!-- TODO(client): add the street address exactly as it appears on Google Business Profile (NAP must match). --></p>
+        <p><a href={SITE.instagram} rel="noopener">Instagram</a></p>
+      </div>
+      <div>
+        <h2>Services</h2>
+        <ul>
+          {services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h2>Service areas</h2>
+        <ul>
+          {featured.slice(0, 7).map((s) => <li><a href={`/service-areas/${s}/`}>{getArea(s).label}</a></li>)}
+          <li><a href="/service-areas/">All service areas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about/">About us</a></li>
+          <li><a href="/reviews/">Reviews</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/special-offers/">Special offers</a></li>
+          <li><a href="/contact/">Request service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>&copy; {new Date().getFullYear()} ServicePros Cleaning &amp; Restoration. Licensed &amp; insured. English y Espa&ntilde;ol.</span>
+      <span><a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></span>
+    </div>
+  </div>
+</footer>
+<div class="mbar">
+  <a class="btn btn--call" href={SITE.phoneHref} data-call="mobile-bar"><Icon name="phone" />Call now</a>
+  <a class="btn btn--ghost" style="color:#fff" href="/contact/">Get help</a>
+</div>

@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Slot from '../components/Slot.astro';
+import { SITE } from '../data/site';
+import { breadcrumbs } from '../data/schema';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'About', href: '/about/' }];
+const facts = [['2001', 'Founded in Maryland'], ['24/7', 'Emergency help'], ['IICRC', 'Certified'], ['1 + 5', 'Year labor and material warranties']];
+---
+<Layout title="About ServicePros | Family & Veteran Owned Since 2001" description="ServicePros Cleaning & Restoration is a family and veteran owned restoration company in Gaithersburg, MD serving Maryland, DC and Northern Virginia since 2001." schema={[breadcrumbs(crumbs)]}>
+  <PageHead crumbs={crumbs} h1="Family and veteran owned. On call since 2001." lead="ServicePros Cleaning & Restoration is a local company in Gaithersburg, Maryland. We restore homes and businesses after water, fire and mold damage, across Maryland, Washington DC and Northern Virginia." />
+  <section class="trust"><div class="wrap"><ul style="grid-template-columns:repeat(2,1fr)">{facts.map(([a, b]) => <li><strong>{a}</strong><span>{b}</span></li>)}</ul></div></section>
+  <section class="sec">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">Who we are</p>
+        <h2>Local people you can reach any hour</h2>
+        <p>For more than 20 years, ServicePros has helped property owners get through some of their worst days. We are a family-owned and veteran-owned company, and we serve customers in English and Spanish.</p>
+        <p>Our approach is simple: answer quickly, explain what is happening, restore the property, and work directly with your insurance company so the claim does not become a second emergency.</p>
+        <ul class="checks">
+          {['Licensed and fully insured', 'IICRC certified', '1-year labor and 5-year material warranties', 'Residential and commercial', 'English and Spanish'].map((t) => <li><Icon name="check" /><span>{t}</span></li>)}
+        </ul>
+      </div>
+      <div class="reveal"><!-- TODO(client): team / owner photo and a short owner story. --><Slot note="Owner or crew portrait, uniformed team, branded vehicle" /></div>
+    </div>
+  </section>
+  <section class="sec sec--paper2">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">What we do</p><h2>Four services, one phone number</h2></div>
+      <div class="related">
+        <a href="/services/water-damage/"><strong>Water damage</strong><span>Extraction, drying and moisture detection.</span></a>
+        <a href="/services/mold-remediation/"><strong>Mold remediation</strong><span>Containment, HEPA filtration, verification.</span></a>
+        <a href="/services/fire-damage/"><strong>Fire and smoke</strong><span>Board-up, soot, odor and rebuild.</span></a>
+      </div>
+      <p style="margin-top:1rem"><a class="link-arrow" href="/services/remodeling/">Remodeling and reconstruction <span><Icon name="arrow" /></span></a></p>
+    </div>
+  </section>
+  <FinalCta heading="Talk to a person, any hour." />
+</Layout>

@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { services, generalFaqs } from '../data/services';
+import { breadcrumbs, faqPage } from '../data/schema';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'FAQ', href: '/faq/' }];
+const all = [...generalFaqs, ...services.flatMap((s) => s.faqs)];
+const seen = new Set<string>();
+const unique = all.filter((f) => !seen.has(f.q) && seen.add(f.q));
+---
+<Layout title="Water, Fire & Mold Restoration FAQ | ServicePros" description="Answers about water damage, fire damage, mold and working with your insurance company. Call ServicePros 24/7 at 301-383-9484." schema={[breadcrumbs(crumbs), faqPage(unique)]}>
+  <PageHead crumbs={crumbs} h1="Frequently asked questions" lead="Straight answers about restoration, timing and insurance." />
+  <section class="sec">
+    <div class="wrap" style="max-width:900px">
+      <h2 class="reveal">General</h2><div class="reveal"><Faq items={generalFaqs} /></div>
+      {services.map((s) => {
+        const extra = s.faqs.filter((f) => !generalFaqs.some((g) => g.q === f.q));
+        return <><h2 style="margin-top:4rem" class="reveal"><a href={`/services/${s.slug}/`} style="text-decoration:none">{s.name}</a></h2><div class="reveal"><Faq items={extra} /></div></>;
+      })}
+    </div>
+  </section>
+  <FinalCta heading="Still have a question? Call us." />
+</Layout>

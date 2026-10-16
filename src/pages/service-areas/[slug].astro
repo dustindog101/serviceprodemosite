@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import Icon from '../../components/Icon.astro';
+import Faq from '../../components/Faq.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { SITE } from '../../data/site';
+import { services } from '../../data/services';
+import { areas, getArea, areaCopy, nearby } from '../../data/areas';
+import { breadcrumbs, faqPage } from '../../data/schema';
+
+export function getStaticPaths() { return areas.map((a) => ({ params: { slug: a.slug }, props: { slug: a.slug } })); }
+const a = getArea(Astro.props.slug);
+const c = areaCopy(a);
+const path = `/service-areas/${a.slug}/`;
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Service areas', href: '/service-areas/' }, { name: a.name, href: path }];
+const near = nearby(a);
+const place = a.kind === 'city' ? `${a.name}, ${a.region}` : a.name;
+const faqs = [
+  { q: `Do you offer 24/7 emergency service in ${place}?`, a: `Yes. ServicePros answers around the clock for water, fire and mold emergencies. Call ${SITE.phoneDisplay}.` },
+  { q: `Do you work with insurance companies in ${place}?`, a: 'Yes. We work directly with insurers and handle the claim paperwork alongside the restoration.' },
+  { q: 'What should I do first after water damage?', a: 'Stop the source if you can by shutting off the main supply, call a restoration professional, notify your insurer and photograph the damage.' },
+];
+---
+<Layout
+  title={`${place} Water, Fire & Mold Restoration | ServicePros`}
+  description={`24/7 water, fire and mold restoration in ${place}. Family and veteran owned since 2001, IICRC certified, licensed and insured. Call ${SITE.phone}.`}
+  schema={[breadcrumbs(crumbs), faqPage(faqs)]}>
+  <PageHead crumbs={crumbs} h1={c.h1} lead={c.opener}>
+    <div class="ph-actions">
+      <a class="btn btn--call" href={SITE.phoneHref} data-call="area-hero"><Icon name="phone" />Call {SITE.phoneDisplay}</a>
+      <a class="btn btn--ghost" href="/contact/">Request service</a>
+    </div>
+  </PageHead>
+  <section class="sec">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">Local help</p>
+        <h2>Restoration for {place} homes and businesses</h2>
+        {c.context && <p>{c.context}</p>}
+        <p>ServicePros is family and veteran owned, IICRC certified, licensed and insured. We serve residential and commercial properties, speak English and Spanish, and work directly with your insurance company.</p>
+        {a.kind === 'county' && <p>Looking for a specific town? Choose it from the nearby areas below or see <a href="/service-areas/">all service areas</a>.</p>}
+        <ul class="checks">
+          {['24/7 emergency response', 'Insurance claims assistance', '1-year labor and 5-year material warranties', `${SITE.offer}. Mention it when you schedule`].map((t) => <li><Icon name="check" /><span>{t}</span></li>)}
+        </ul>
+      </div>
+      <div class="related reveal" style="grid-template-columns:1fr">
+        {services.map((s) => <a href={`/services/${s.slug}/`}><strong>{s.name} in {a.name}</strong><span>{s.short}</span></a>)}
+      </div>
+    </div>
+  </section>
+  <section class="sec sec--dark">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">Process</p><h2>How we help in {a.name}</h2></div>
+      <ol class="steps reveal">
+        <li><div><h3>Get in touch</h3><p>Call any hour or send the form.</p></div></li>
+        <li><div><h3>Schedule an inspection</h3><p>Moisture meters and infrared cameras find the damage.</p></div></li>
+        <li><div><h3>Work with your insurance</h3><p>We coordinate directly with your insurer.</p></div></li>
+        <li><div><h3>Restore your space</h3><p>Drying, cleaning and repairs, warrantied.</p></div></li>
+      </ol>
+    </div>
+  </section>
+  <section class="sec sec--white">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">FAQ</p><h2>Questions from {a.name}</h2>
+        {near.length > 0 && <>
+          <p style="margin-top:2rem"><strong>Nearby areas we serve</strong></p>
+          <ul class="chips chips--dense">{near.map((n) => <li><a href={`/service-areas/${n.slug}/`}>{n.name}</a></li>)}</ul>
+        </>}
+      </div>
+      <div class="reveal"><Faq items={faqs} /></div>
+    </div>
+  </section>
+  <FinalCta heading={`Damage in ${a.name}? Call now.`} />
+</Layout>

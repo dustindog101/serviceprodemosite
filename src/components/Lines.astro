@@ -1,0 +1,11 @@
+---
+// Decorative "waterline" contour lines. Pure SVG, no image weight.
+const { class: cls = '' } = Astro.props as { class?: string };
+---
+<svg class={`lines ${cls}`} viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <g fill="none" stroke="#4f7fa8" stroke-width="1.2" class="drift">
+    {[0,1,2,3,4,5,6,7,8].map((i) => (
+      <path d={`M-60 ${300 + i * 34} C 150 ${240 + i * 30}, 300 ${380 + i * 30}, 520 ${320 + i * 32} S 900 ${230 + i * 34}, 1260 ${320 + i * 30}`} opacity={0.15 + (i % 3) * 0.12} />
+    ))}
+  </g>
+</svg>

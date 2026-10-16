@@ -1,0 +1,30 @@
+---
+import { SITE, FORM_ENDPOINT, DAMAGE_TYPES } from '../data/site';
+const { id = 'f', long = false, title = 'Request service', sub = 'Takes 30 seconds. We call you back.' } = Astro.props as { id?: string; long?: boolean; title?: string; sub?: string };
+---
+<div class="form-card">
+  <h2>{title}</h2>
+  <p class="sub">{sub}</p>
+  <!-- Progressive enhancement: works as a plain POST to FORM_ENDPOINT; src/scripts/site.ts upgrades it to fetch() and falls back to mailto. -->
+  <form action={FORM_ENDPOINT} method="POST" data-sp-form data-mailto={SITE.email} data-endpoint={FORM_ENDPOINT} novalidate>
+    <label class="toggle" for={`${id}-em`}>
+      <input type="checkbox" name="emergency" value="yes" id={`${id}-em`} data-emergency />
+      <span>This is an emergency happening now</span>
+    </label>
+    <div class="emergency-msg" data-emergency-msg role="status">For the fastest help, <a href={SITE.phoneHref}>call {SITE.phoneDisplay}</a>. We answer 24/7. You can still send this form.</div>
+    <div class="form-grid two">
+      <div class="field"><label for={`${id}-name`}>Name</label><input id={`${id}-name`} name="name" autocomplete="name" required /><span class="err">Please enter your name.</span></div>
+      <div class="field"><label for={`${id}-phone`}>Phone</label><input id={`${id}-phone`} name="phone" type="tel" inputmode="tel" autocomplete="tel" required /><span class="err">Please enter a phone number we can call.</span></div>
+      <div class="field"><label for={`${id}-zip`}>ZIP code</label><input id={`${id}-zip`} name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="10" required /><span class="err">Please enter your ZIP code.</span></div>
+      <div class="field"><label for={`${id}-type`}>What happened?</label>
+        <select id={`${id}-type`} name="damage_type" required><option value="">Choose one</option>{DAMAGE_TYPES.map((d) => <option>{d}</option>)}</select><span class="err">Please choose one.</span></div>
+    </div>
+    {long && <div class="field"><label for={`${id}-email`}>Email (optional)</label><input id={`${id}-email`} name="email" type="email" autocomplete="email" /></div>}
+    {long && <div class="field"><label for={`${id}-msg`}>Anything we should know? (optional)</label><textarea id={`${id}-msg`} name="message"></textarea></div>}
+    <div class="hp" aria-hidden="true"><label>Leave blank<input name="_gotcha" tabindex="-1" autocomplete="off" /></label></div>
+    <button class="btn btn--navy" type="submit">Request service</button>
+    <div class="form-status" data-status role="status" aria-live="polite"></div>
+    <p class="form-fine">Prefer email? <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. By submitting you agree to our <a href="/privacy/">privacy policy</a>.</p>
+    <noscript><p class="form-fine">JavaScript is off: submitting posts the form directly. If that does not work, email us or call {SITE.phoneDisplay}.</p></noscript>
+  </form>
+</div>

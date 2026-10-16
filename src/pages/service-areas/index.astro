@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHead from '../../components/PageHead.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { groups } from '../../data/areas';
+import { breadcrumbs } from '../../data/schema';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Service areas', href: '/service-areas/' }];
+const g = groups();
+---
+<Layout title="Service Areas: Maryland, DC & Northern Virginia | ServicePros" description="ServicePros restores water, fire and mold damage across Maryland, Washington DC and Northern Virginia. Find your county or city. Call 301-383-9484." schema={[breadcrumbs(crumbs)]}>
+  <PageHead crumbs={crumbs} h1="Service areas in Maryland, DC & Northern Virginia" lead="Based in Gaithersburg, MD. Find your county, city or neighborhood." />
+  <section class="sec">
+    <div class="wrap">
+      {g.map((r, i) => (
+        <>
+          <h2 class={i ? 'region-h' : ''}>{r.title}</h2>
+          {r.groups.map((x) => (
+            <div class="area-group">
+              <h3>{x.county ? <a href={`/service-areas/${x.county.slug}/`}>{x.name}</a> : x.name}</h3>
+              <ul class="chips chips--dense">
+                {x.cities.map((c) => <li><a href={`/service-areas/${c.slug}/`}>{c.name}</a></li>)}
+                {!x.cities.length && x.county && <li><a href={`/service-areas/${x.county.slug}/`}>{x.county.name}</a></li>}
+              </ul>
+            </div>
+          ))}
+        </>
+      ))}
+    </div>
+  </section>
+  <FinalCta />
+</Layout>

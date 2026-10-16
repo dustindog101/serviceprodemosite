@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import { SITE } from '../data/site';
+import { breadcrumbs } from '../data/schema';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Terms & conditions', href: '/terms/' }];
+---
+<Layout title="Terms & Conditions | ServicePros Cleaning & Restoration" description="Terms for using the ServicePros Cleaning & Restoration website and our special offers." schema={[breadcrumbs(crumbs)]}>
+  <PageHead crumbs={crumbs} h1="Terms & conditions" />
+  <section class="sec"><div class="wrap prose">
+    {/* TODO(client/legal): placeholder terms. Have them reviewed before launch. */}
+    <p>By using this website you agree to these terms.</p>
+    <h2>Information on this site</h2>
+    <p>The content on this site is general information, not a quote or a guarantee of timing or results. Estimates, timelines and scope are confirmed at inspection or consultation.</p>
+    <h2>Special offers</h2>
+    <p>The $500 off offer is not valid with any other offers or promotions. Restrictions apply. You must mention the coupon at the time of scheduling.</p>
+    <h2>Warranties</h2>
+    <p>Work is covered by a 1-year labor warranty and a 5-year material warranty. Details are provided with your estimate or agreement.</p>
+    <h2>Contact</h2>
+    <p>Questions: <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or {SITE.phoneDisplay}.</p>
+  </div></section>
+</Layout>

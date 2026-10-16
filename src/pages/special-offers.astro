@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { SITE } from '../data/site';
+import { breadcrumbs } from '../data/schema';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Special offers', href: '/special-offers/' }];
+---
+<Layout title="$500 Off Any Service | Special Offers | ServicePros" description="Save $500 on any ServicePros water, mold, fire, cleaning or remodeling service. Mention the offer when you schedule. Call 301-383-9484." schema={[breadcrumbs(crumbs)]}>
+  <PageHead crumbs={crumbs} h1="Special offers" lead="Save on restoration and reconstruction, and know your work is covered by our warranties." />
+  <section class="sec">
+    <div class="wrap">
+      <div class="coupon reveal">
+        <div class="amt">$500<small>off any service</small></div>
+        <div>
+          <h2>Water, mold, fire, cleaning, remodeling and reconstruction</h2>
+          <p>Call ServicePros today to claim your discount. <strong>Mention this offer when you schedule.</strong></p>
+          <p style="font-size:.9rem;color:var(--muted)">Not valid with any other offers or promotions. Restrictions apply. Must mention this coupon at the time of scheduling.</p>
+          <a class="btn btn--call" href={SITE.phoneHref} data-call="offer"><Icon name="phone" />Call {SITE.phoneDisplay}</a>
+        </div>
+      </div>
+      <div class="related reveal" style="margin-top:2rem">
+        <div class="tip"><span class="n">1 yr</span><h3>Labor warranty</h3><p>One-year warranty on labor.</p></div>
+        <div class="tip"><span class="n">5 yr</span><h3>Material warranty</h3><p>Five-year warranty on materials.</p></div>
+        <div class="tip"><span class="n">Ask</span><h3>Financing options</h3><p>Ask us about financing when you call. <!-- TODO(client): add financing terms/partner. --></p></div>
+      </div>
+    </div>
+  </section>
+  <FinalCta />
+</Layout>

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../data/site';
+import { breadcrumbs } from '../data/schema';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Request service', href: '/contact/' }];
+---
+<Layout title="Request Service | Call 301-383-9484 | ServicePros" description="Request water, fire, mold or remodeling service. Call ServicePros 24/7 at 301-383-9484 or send the form and we will call you back." schema={[breadcrumbs(crumbs)]}>
+  <PageHead crumbs={crumbs} h1="Request service" lead="For an emergency, calling is fastest. We answer 24/7." />
+  <section class="sec">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <a class="bigcall" href={SITE.phoneHref} data-call="contact"><Icon name="phone" /><span><small>Call 24/7</small><strong>{SITE.phoneDisplay}</strong></span></a>
+        <h2 style="margin-top:2rem">Other ways to reach us</h2>
+        <ul class="checks">
+          <li><Icon name="mail" /><span><a href={`mailto:${SITE.email}`}>{SITE.email}</a></span></li>
+          <li><Icon name="clock" /><span>Open 24 hours, 7 days a week</span></li>
+          <li><Icon name="shield" /><span>Based in Gaithersburg, MD. Serving Maryland, DC and Northern Virginia. English y Espa&ntilde;ol.</span></li>
+        </ul>
+        <!-- TODO(client): add street address and a Google Maps link once confirmed (match Google Business Profile). -->
+      </div>
+      <div class="reveal"><ContactForm id="contact" long title="Tell us what happened" sub="We will call you back." /></div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { SITE } from '../data/site';
+import { breadcrumbs } from '../data/schema';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Reviews', href: '/reviews/' }];
+---
+<Layout title="Customer Reviews | ServicePros Cleaning & Restoration" description="Read a customer story from Gaithersburg, MD about ServicePros water damage response and insurance help." schema={[breadcrumbs(crumbs)]}>
+  <PageHead crumbs={crumbs} h1="What customers say" lead="We would rather show you real feedback than invented numbers. Here is a customer story from Gaithersburg." />
+  <section class="sec">
+    <div class="wrap">
+      <figure class="panel reveal" style="margin:0;max-width:900px">
+        <p class="eyebrow" style="color:var(--steel-300)">Water damage &middot; Gaithersburg, MD</p>
+        <blockquote style="margin:0;font:400 clamp(1.3rem,2.6vw,1.8rem)/1.35 var(--font-head)">A late-night plumbing leak from the top-floor bathroom threatened the lower levels of Matt's home. ServicePros responded in under an hour, began mitigation and handled communication with the insurance company.</blockquote>
+        <figcaption style="margin-top:1.25rem;color:var(--steel-200)"><strong style="color:#fff">Matt, Gaithersburg, MD</strong><br />His wife praised the professionalism and quality, calling it one of the easiest and most reassuring service experiences their family has had.</figcaption>
+        <p style="font-size:.85rem;color:var(--steel-300);margin:1rem 0 0">Summary of a customer review.</p>
+      </figure>
+      <!-- TODO(client): add more reviews (name, neighborhood, source). Link the Google Business Profile reviews here and, only when real and visible, add aggregateRating to the LocalBusiness JSON-LD in src/data/schema.ts. -->
+      <div style="margin-top:3rem;max-width:68ch" class="reveal">
+        <h2>Worked with ServicePros?</h2>
+        <p>We would like to hear how it went. Send a note to <a href={`mailto:${SITE.email}?subject=My ServicePros review`}>{SITE.email}</a>.</p>
+      </div>
+    </div>
+  </section>
+  <FinalCta />
+</Layout>

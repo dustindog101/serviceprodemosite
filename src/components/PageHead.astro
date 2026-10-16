@@ -1,0 +1,14 @@
+---
+import Crumbs from './Crumbs.astro';
+import Lines from './Lines.astro';
+const { crumbs, h1, lead } = Astro.props as { crumbs: { name: string; href: string }[]; h1: string; lead?: string };
+---
+<section class="page-head">
+  <Lines />
+  <div class="wrap">
+    <Crumbs items={crumbs} />
+    <h1>{h1}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</section>

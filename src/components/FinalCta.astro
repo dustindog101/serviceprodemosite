@@ -1,0 +1,20 @@
+---
+import { SITE } from '../data/site';
+import Icon from './Icon.astro';
+import ContactForm from './ContactForm.astro';
+import Lines from './Lines.astro';
+const { heading = 'Water, fire or mold? Call now.', text = 'A person answers any hour of the day. Not ready to talk? Send the short form and we will call you back.' } = Astro.props as { heading?: string; text?: string };
+---
+<section class="final sec">
+  <Lines />
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Available 24/7</p>
+      <h2>{heading}</h2>
+      <p>{text}</p>
+      <a class="bigcall" href={SITE.phoneHref} data-call="final-cta"><Icon name="phone" /><span><small>Call 24/7</small><strong>{SITE.phoneDisplay}</strong></span></a>
+      <p style="font-size:.95rem;color:var(--steel-300)">{SITE.offer}. Mention the offer when scheduling. <a href="/special-offers/">Terms</a>.</p>
+    </div>
+    <div class="reveal"><ContactForm id="final" /></div>
+  </div>
+</section>

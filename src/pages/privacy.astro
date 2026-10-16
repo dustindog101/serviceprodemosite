@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHead from '../components/PageHead.astro';
+import { SITE } from '../data/site';
+import { breadcrumbs } from '../data/schema';
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Privacy policy', href: '/privacy/' }];
+---
+<Layout title="Privacy Policy | ServicePros Cleaning & Restoration" description="How ServicePros Cleaning & Restoration handles information you send through this website." schema={[breadcrumbs(crumbs)]}>
+  <PageHead crumbs={crumbs} h1="Privacy policy" />
+  <section class="sec"><div class="wrap prose">
+    {/* TODO(client/legal): placeholder policy. Have it reviewed and update when analytics, call tracking or a form provider are added. */}
+    <p>This policy explains how ServicePros Cleaning &amp; Restoration ("we") handles information you give us through this website.</p>
+    <h2>Information we collect</h2>
+    <p>When you submit the request form we receive the details you enter: your name, phone number, ZIP code, type of damage and any message or email address you choose to add. If you call or email us, we receive what you share with us.</p>
+    <h2>How we use it</h2>
+    <p>We use this information to respond to your request, provide an estimate or service, and work with your insurance company if you ask us to. We do not sell your personal information.</p>
+    <h2>Service providers</h2>
+    <p>Form submissions may be delivered through a third-party form service so that we receive them by email. Our hosting provider may keep standard server logs.</p>
+    <h2>Your choices</h2>
+    <p>You can ask us to correct or delete the information you sent us by contacting us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or {SITE.phoneDisplay}.</p>
+    <h2>Changes</h2>
+    <p>We may update this policy and will post the new version on this page.</p>
+  </div></section>
+</Layout>
